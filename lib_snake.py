@@ -3,7 +3,7 @@
 # Objectif : faire un jeu snake stylé
 # 
 # Problèmes à corriger :
-# 
+# Dès qu'on mange une pomme, la queue s'agrandi bien mais elle vient se supperoser avec le dernier carré au prochai déplacement
 
 import tkinter as tk
 from random import randint
@@ -11,19 +11,29 @@ from random import randint
 pas_mouvementX = 20
 pas_mouvementY = 20
 nourriture = None
+serpent = []
 
 class Tete:
 
-    def __init__(self,_height,_width,_canvas,_window):
-        self.__posX = 10
-        self.__posY = 10
-        self.__height = _height
-        self.__width = _width
+    def __init__(self,_posX,_posY,_canvas,_window):
+        global serpent
+        self.__posX = _posX
+        self.__posY = _posY
+        self.__height = 20
+        self.__width = 20
         self.__pattern = _canvas.create_rectangle(self.__posX,self.__posY,self.__posX+self.__width,self.__posY+self.__height,fill="green")
         self.__canvas = _canvas
         self.__window = _window
         self.__arret = True
         self.__winning = True
+        self.__mange = False
+        serpent.append(self)
+
+    def get_posX(self):
+        return self.__posX
+    
+    def get_posY(self):
+        return self.__posY
 
     def evenement(self,event):
         global pas_mouvementX,pas_mouvementY
@@ -81,23 +91,43 @@ class Tete:
             self.__posY == nourriture.get_posY()): # collision avec la pomme
             self.__canvas.delete(nourriture.get_pattern())
             del nourriture
-            Apple(20,20,self.__canvas,self.__window)
+            Apple(10 + 20*randint(0,28),10 + 20*randint(0,28),self.__canvas,self.__window)
+            self.__mange = True
 
+        # deplacement du corps
+        for i in range(len(serpent)):
+            if i != 0:
+                if i == len(serpent)-1 and self.__mange:
+                    save1 = serpent[i].get_posX()
+                    save2 = serpent[i].get_posY()
+                serpent[i].set_posX(serpent[i-1].get_posX())
+                serpent[i].set_posY(serpent[i-1].get_posY())
+                print(serpent[i].get_posX(),serpent[i].get_posY(),i)
+                self.__canvas.coords(serpent[i].get_pattern(),serpent[i].get_posX(),serpent[i].get_posY(),serpent[i].get_posX()+self.__width,serpent[i].get_posY()+self.__height)
+        
+        # création de l'objet de corp à la fin du serpent
+        if self.__mange:
+            Corps(save1,save2,self.__canvas,self.__window)
+            save1,save2 = None,None
+            self.__mange = False
+
+        # déplaement de la tête
         self.__posX += pas_mouvementX
         self.__posY += pas_mouvementY
         self.__canvas.coords(self.__pattern,self.__posX,self.__posY,self.__posX+self.__width,self.__posY+self.__height)
+
+        
         self.__window.after(100,self.deplacement)
 
 
 class Apple:
 
-    def __init__(self,_height,_width,_canvas,_window):
-        global nourriture
-
-        self.__posX = 10 + 20*randint(0,28)
-        self.__posY = 10 + 20*randint(0,28)
-        self.__height = _height
-        self.__width = _width
+    def __init__(self,_posX,_posY,_canvas,_window):
+        global serpent, nourriture
+        self.__posX = _posX
+        self.__posY = _posY
+        self.__height = 20
+        self.__width = 20
         self.__pattern = _canvas.create_oval(self.__posX,self.__posY,self.__posX+self.__width,self.__posY+self.__height,fill="red")
         self.__canvas = _canvas
         self.__window = _window
@@ -115,5 +145,34 @@ class Apple:
     def get_width(self):
         return self.__width
     
+    def get_pattern(self):
+        return self.__pattern
+
+    
+class Corps:
+    
+    def __init__(self,_posX,_posY,_canvas,_window):
+        global serpent
+        self.__posX = _posX
+        self.__posY = _posY
+        self.__height = 20
+        self.__width = 20
+        self.__pattern = _canvas.create_rectangle(self.__posX,self.__posY,self.__posX+self.__width,self.__posY+self.__height,fill="lightgreen")
+        self.__canvas = _canvas
+        self.__window = _window
+        serpent.append(self)
+    
+    def get_posX(self):
+        return self.__posX
+    
+    def get_posY(self):
+        return self.__posY
+    
+    def set_posX(self,new_posX):
+        self.__posX = new_posX
+    
+    def set_posY(self,new_posY):
+        self.__posY = new_posY
+
     def get_pattern(self):
         return self.__pattern
