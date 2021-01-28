@@ -7,7 +7,7 @@
 # 
 
 import tkinter as tk
-# import lib_snake as ls
+import lib_snake as ls
 
 dimension_serpent = 20 # dimension correcte
 
@@ -20,7 +20,8 @@ def jeu():
     canvas = tk.Canvas(window, height = 600, width = 600, background = "grey")
     canvas.pack()
     quitter.pack()
-    canvas.create_rectangle(100,100,100+dimension_serpent,100+dimension_serpent,fill="green")
+    serpent = ls.Snake(dimension_serpent,dimension_serpent,canvas)
+    canvas.bind_all("<Key>",serpent.evenement)
     window.mainloop()
 
 jeu()
