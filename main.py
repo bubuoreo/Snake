@@ -20,8 +20,9 @@ def jeu():
     canvas = tk.Canvas(window, height = 600, width = 600, background = "grey")
     canvas.pack()
     quitter.pack()
-    serpent = ls.Snake(dimension_serpent,dimension_serpent,canvas)
-    canvas.bind_all("<Key>",serpent.evenement)
+    tete = ls.Tete(dimension_serpent,dimension_serpent,canvas,window)
+    pomme = ls.Apple(dimension_serpent,dimension_serpent,canvas,window)
+    canvas.bind_all("<Key>",tete.evenement)
     window.mainloop()
 
 jeu()
