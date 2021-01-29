@@ -3,7 +3,7 @@
 # Objectif : faire un jeu snake stylé
 # 
 # Problèmes à corriger :
-# Dès qu'on mange une pomme, la queue s'agrandi bien mais elle vient se supperoser avec le dernier carré au prochai déplacement
+#  
 
 import tkinter as tk
 from random import randint
@@ -100,10 +100,10 @@ class Tete:
                 if i == len(serpent)-1 and self.__mange:
                     save1 = serpent[i].get_posX()
                     save2 = serpent[i].get_posY()
-                serpent[i].set_posX(serpent[i-1].get_posX())
-                serpent[i].set_posY(serpent[i-1].get_posY())
-                print(serpent[i].get_posX(),serpent[i].get_posY(),i)
-                self.__canvas.coords(serpent[i].get_pattern(),serpent[i].get_posX(),serpent[i].get_posY(),serpent[i].get_posX()+self.__width,serpent[i].get_posY()+self.__height)
+                serpent[-i].set_posX(serpent[-i-1].get_posX())
+                serpent[-i].set_posY(serpent[-i-1].get_posY())
+                print(serpent[-i].get_posX(),serpent[-i].get_posY(),i)
+                self.__canvas.coords(serpent[-i].get_pattern(),serpent[-i].get_posX(),serpent[-i].get_posY(),serpent[-i].get_posX()+self.__width,serpent[-i].get_posY()+self.__height)
         
         # création de l'objet de corp à la fin du serpent
         if self.__mange:
@@ -123,7 +123,7 @@ class Tete:
 class Apple:
 
     def __init__(self,_posX,_posY,_canvas,_window):
-        global serpent, nourriture
+        global nourriture
         self.__posX = _posX
         self.__posY = _posY
         self.__height = 20
