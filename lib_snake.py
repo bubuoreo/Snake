@@ -74,9 +74,15 @@ class Tete:
             if self.__arret :
                 self.__arret = False
                 self.deplacement()
+        
+        if touche == "p":
+            self.__arret = True
     
     def deplacement(self):
         global pas_mouvementX, pas_mouvementY, nourriture
+
+        if self.__arret:
+            return
 
         if self.__posX < 0:
             self.__winning = False
