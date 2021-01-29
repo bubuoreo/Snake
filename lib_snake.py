@@ -24,6 +24,7 @@ class Tete:
         self.__pattern = _canvas.create_rectangle(self.__posX,self.__posY,self.__posX+self.__width,self.__posY+self.__height,fill="green")
         self.__canvas = _canvas
         self.__window = _window
+        self.__score = 0
         self.__arret = True
         self.__winning = True
         self.__mange = False
@@ -34,6 +35,12 @@ class Tete:
     
     def get_posY(self):
         return self.__posY
+    
+    def get_score(self):
+        return self.__score
+    
+    def set_score(self,points):
+        self.__score += points
 
     def evenement(self,event):
         global pas_mouvementX,pas_mouvementY
@@ -92,6 +99,7 @@ class Tete:
             self.__canvas.delete(nourriture.get_pattern())
             del nourriture
             Apple(10 + 20*randint(0,28),10 + 20*randint(0,28),self.__canvas,self.__window)
+            self.__score += 1
             self.__mange = True
 
         # deplacement du corps
@@ -102,7 +110,6 @@ class Tete:
                     save2 = serpent[i].get_posY()
                 serpent[-i].set_posX(serpent[-i-1].get_posX())
                 serpent[-i].set_posY(serpent[-i-1].get_posY())
-                print(serpent[-i].get_posX(),serpent[-i].get_posY(),i)
                 self.__canvas.coords(serpent[-i].get_pattern(),serpent[-i].get_posX(),serpent[-i].get_posY(),serpent[-i].get_posX()+self.__width,serpent[-i].get_posY()+self.__height)
         
         # création de l'objet de corp à la fin du serpent
@@ -116,6 +123,12 @@ class Tete:
         self.__posY += pas_mouvementY
         self.__canvas.coords(self.__pattern,self.__posX,self.__posY,self.__posX+self.__width,self.__posY+self.__height)
 
+        for i in range(len(serpent)):
+            if i != 0:
+                if self.__posX == serpent[i].get_posX() and self.__posY == serpent[i].get_posY():
+                    print(self.__posX,serpent[i].get_posX())
+                    self.__winning = False
+                    return
         
         self.__window.after(100,self.deplacement)
 
