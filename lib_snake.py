@@ -88,7 +88,7 @@ class Tete:
             self.__winning = False
             return
 
-        if self.__posX+self.__height > 600:
+        if self.__posX+self.__height > 403:
             self.__winning = False
             return
 
@@ -96,7 +96,7 @@ class Tete:
             self.__winning = False
             return
 
-        if self.__posY+self.__width > 600:
+        if self.__posY+self.__width > 403:
             self.__winning = False
             return
         
@@ -104,7 +104,7 @@ class Tete:
             self.__posY == nourriture.get_posY()): # collision avec la pomme
             self.__canvas.delete(nourriture.get_pattern())
             del nourriture
-            Apple(10 + 20*randint(0,28),10 + 20*randint(0,28),self.__canvas,self.__window)
+            Apple(3 + 20*randint(0,19),3 + 20*randint(0,19),self.__canvas,self.__window)
             self.__score += 1
             self.__mange = True
 
@@ -132,7 +132,6 @@ class Tete:
         for i in range(len(serpent)):
             if i != 0:
                 if self.__posX == serpent[i].get_posX() and self.__posY == serpent[i].get_posY():
-                    print(self.__posX,serpent[i].get_posX())
                     self.__winning = False
                     return
         
