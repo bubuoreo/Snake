@@ -176,8 +176,6 @@ class Corps:
         self.__height = 20
         self.__width = 20
         self.__pattern = _canvas.create_rectangle(self.__posX,self.__posY,self.__posX+self.__width,self.__posY+self.__height,fill="lightgreen")
-        self.__canvas = _canvas
-        self.__window = _window
         serpent.append(self)
     
     def get_posX(self):
