@@ -5,6 +5,12 @@
 # 
 # Problèmes à corriger :
 # 
+# fond du canvas avec une image d'herbe peut-être
+# titre à la fenêtre
+# travailler la disposition
+# mettre un écran de fin de partie
+# mettre un peu de couleur tout simplement
+#  
 
 import tkinter as tk
 import lib_snake as ls

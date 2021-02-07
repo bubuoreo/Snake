@@ -3,6 +3,13 @@
 # Objectif : faire un jeu snake stylé
 # 
 # Problèmes à corriger :
+# 
+# faire des variables générales pour tout les chiffres qui se baladent 
+# mettre le serpent d'une couleur pas mal ^^
+# afficher un message de pause quand on fait pause
+# empêcher le joueur de se retourner sur sois-même
+# réussir à faire un terrain de la taille qu'on veut et ca aggrandit le serpent en conséquence
+#   avec tout es éléments comme le canvas, les déplacements, la pomme, condit collisions etc
 #  
 
 import tkinter as tk
